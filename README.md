@@ -16,6 +16,9 @@
 Customize, generate, and copy Caddy route templates directly in your browser:  
 👉 **[https://keshavsoft.github.io/caddy-template/](https://keshavsoft.github.io/caddy-template/)**
 
+Looking for plain-English explanations, traffic diagrams, and the 5-minute hosting checklist?  
+📖 Read the **[Caddy Template Knowledge Base Handbook](https://keshavsoft.github.io/caddy-template-knowledge/)**
+
 ---
 
 ## 💡 Why `caddy-template`?

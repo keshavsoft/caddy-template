@@ -1,0 +1,44 @@
+{
+  "name": "caddy-template",
+  "version": "1.0.0",
+  "description": "Pre-configured, battle-tested Caddy JSON route templates for reverse proxies, WebSockets, and static servers",
+  "license": "ISC",
+  "author": "KeshavSoft",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/keshavsoft/caddy-template.git"
+  },
+  "bugs": {
+    "url": "https://github.com/keshavsoft/caddy-template/issues"
+  },
+  "homepage": "https://keshavsoft.github.io/caddy-template/",
+  "type": "module",
+  "main": "./src/index.js",
+  "exports": {
+    ".": "./src/index.js",
+    "./v1": "./src/v1/index.js"
+  },
+  "bin": {
+    "caddy-template": "./bin/index.js"
+  },
+  "files": [
+    "bin",
+    "src",
+    "docs",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "start": "node bin/index.js",
+    "test": "node --test"
+  },
+  "keywords": [
+    "caddy",
+    "caddy-server",
+    "caddy-template",
+    "reverse-proxy",
+    "websocket",
+    "json",
+    "keshavsoft"
+  ]
+}

@@ -223,11 +223,37 @@ console.log(JSON.stringify(route, null, 2));
 
 ---
 
-## 🔗 The KeshavSoft Caddy Suite
+## ⚡ The Story: Why We Transitioned to Native JSON
 
-- **[caddy-cli](https://github.com/keshavsoft/caddy-cli)**: Observability, port lookup (`-p`), and domain drill-down (`-d`).
-- **[caddy-template](https://github.com/keshavsoft/caddy-template)**: Battle-tested route JSON generator.
-- **[Official Caddy Documentation](https://caddyserver.com/docs/)**: Upstream Caddy references.
+According to the [official Caddy architecture documentation](https://caddyserver.com/docs/getting-started#the-caddyfile-is-an-adapter), **the Caddyfile is only an adapter**.
+
+| Paradigm | [Caddyfile Adapter](https://caddyserver.com/docs/caddyfile) | [Native Caddy JSON](https://caddyserver.com/docs/json/) |
+| :--- | :--- | :--- |
+| **Primary Use** | Manual text editing | True source of truth |
+| **API Support** | Static, requires file reload | Full zero-downtime [Caddy Admin API](https://caddyserver.com/docs/api) (`:2019`) |
+| **Fleet Automation** | Fragile regex string parsing (`sed`) | Safe, programmatic JSON AST manipulation |
+| **Active WebSockets** | Risk of dropped sockets via systemctl | Preserved in-memory across hot reloads |
+
+**Why `caddy-template` exists:** Native JSON is ideal for machines, but hand-crafting 25-line nested JSON ASTs (`match ➔ handle ➔ subroute ➔ routes ➔ handle ➔ reverse_proxy ➔ upstreams ➔ dial`) invites syntax and bracket errors. `caddy-template` outputs pre-validated, schema-compliant blueprints every time.
+
+---
+
+## 🧩 The KeshavSoft Caddy Suite Ecosystem
+
+| Repository | Responsibility | npm / Docs | Key Command |
+| :--- | :--- | :--- | :--- |
+| **[`caddy-cli`](https://github.com/keshavsoft/caddy-cli)** | Observability & Port Mapping | [![npm](https://img.shields.io/npm/v/caddy-cli.svg?style=flat-square)](https://www.npmjs.com/package/caddy-cli) | `npx caddy-cli -p` |
+| **[`caddy-template`](https://github.com/keshavsoft/caddy-template)** | Route Blueprint Generation | [![npm](https://img.shields.io/npm/v/caddy-template.svg?style=flat-square)](https://www.npmjs.com/package/caddy-template) | `npx caddy-template proxy <host> <port>` |
+| **[`caddy-subdomain`](https://github.com/keshavsoft/caddy-subdomain)** | Smoke Probes & Promotion | [![npm](https://img.shields.io/npm/v/caddy-subdomain.svg?style=flat-square)](https://www.npmjs.com/package/caddy-subdomain) | `npx caddy-subdomain probe <host>` |
+| **[`caddy-fileserver`](https://github.com/keshavsoft/caddy-fileserver)** | Ubuntu Filesystem Bridge | [![npm](https://img.shields.io/npm/v/caddy-fileserver.svg?style=flat-square)](https://www.npmjs.com/package/caddy-fileserver) | `npx caddy-fileserver init <host>` |
+| **[`caddy-knowledge`](https://github.com/keshavsoft/caddy-knowledge)** | Master Architectural Handbook | [Live Handbook](https://keshavsoft.github.io/caddy-knowledge/) | Full Suite Reference |
+| **[`caddy-template-knowledge`](https://github.com/keshavsoft/caddy-template-knowledge)** | Route Blueprint Manual | [Live Manual](https://keshavsoft.github.io/caddy-template-knowledge/) | AST Deep-Dives |
+| **[`caddy-hosting`](https://github.com/keshavsoft/caddy-hosting)** | Unified Gateway & Hub | [Live Portal](https://keshavsoft.github.io/caddy-hosting/) | Gateway Hub |
+
+### The 3-Stage VPS Subdomain Maturity Model
+1. **Stage 1 (Smoke Probe):** `npx caddy-subdomain probe <domain>` &rarr; verify DNS & SSL in memory (200 OK) with zero code/disk.
+2. **Stage 2 (Static File Server):** `npx caddy-fileserver init <domain>` &rarr; provisions `/usr/share/<domain>` & native `file_server`.
+3. **Stage 3 (Dynamic Node Backend):** `npx caddy-cli -p` (find free port) &rarr; `npx caddy-template proxy <domain> <port>` &rarr; `npx caddy-subdomain add <domain> <port>`.
 
 ---
 
